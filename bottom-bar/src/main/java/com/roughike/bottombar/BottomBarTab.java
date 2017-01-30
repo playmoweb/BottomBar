@@ -42,7 +42,7 @@ public class BottomBarTab extends LinearLayout {
     private long animationDuration = 150;
     private float activeTitleScale = 1;
     private float inactiveFixedTitleScale = 0.86f;
-    private boolean noChangeInSelection = false;
+    private boolean noChangeInSelection = false; // avoid animation padding
 
     private final int sixDps;
     private final int eightDps;
