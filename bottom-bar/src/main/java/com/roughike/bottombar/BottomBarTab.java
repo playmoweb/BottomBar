@@ -42,6 +42,7 @@ public class BottomBarTab extends LinearLayout {
     private long animationDuration = 150;
     private float activeTitleScale = 1;
     private float inactiveFixedTitleScale = 0.86f;
+    private boolean noChangeInSelection = false;
 
     private final int sixDps;
     private final int eightDps;
@@ -377,7 +378,7 @@ public class BottomBarTab extends LinearLayout {
         boolean isShifting = type == Type.SHIFTING;
 
         float scale = isShifting ? 0 : inactiveFixedTitleScale;
-        int iconPaddingTop = isShifting ? sixteenDps : eightDps;
+        int iconPaddingTop = isShifting || noChangeInSelection ? sixteenDps : eightDps;
 
         if (animate) {
             setTopPaddingAnimated(iconView.getPaddingTop(), iconPaddingTop);
@@ -581,6 +582,10 @@ public class BottomBarTab extends LinearLayout {
 
     public void setAnimationDuration(long value) {
         animationDuration = value;
+    }
+
+    public void setNoChangeInSelection(boolean value) {
+        noChangeInSelection = value;
     }
 
     @VisibleForTesting
