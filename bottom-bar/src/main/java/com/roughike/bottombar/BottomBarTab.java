@@ -39,9 +39,9 @@ public class BottomBarTab extends LinearLayout {
     @VisibleForTesting
     static final String STATE_BADGE_COUNT = "STATE_BADGE_COUNT_FOR_TAB_";
 
-    private static final long ANIMATION_DURATION = 150;
-    private static final float ACTIVE_TITLE_SCALE = 1;
-    private static final float INACTIVE_FIXED_TITLE_SCALE = 0.86f;
+    private long animationDuration = 150;
+    private float activeTitleScale = 1;
+    private float inactiveFixedTitleScale = 0.86f;
 
     private final int sixDps;
     private final int eightDps;
@@ -357,10 +357,10 @@ public class BottomBarTab extends LinearLayout {
         if (animate) {
             setTopPaddingAnimated(iconView.getPaddingTop(), sixDps);
             animateIcon(activeAlpha);
-            animateTitle(ACTIVE_TITLE_SCALE, activeAlpha);
+            animateTitle(activeTitleScale, activeAlpha);
             animateColors(inActiveColor, activeColor);
         } else {
-            setTitleScale(ACTIVE_TITLE_SCALE);
+            setTitleScale(activeTitleScale);
             setTopPadding(sixDps);
             setColors(activeColor);
             setAlphas(activeAlpha);
@@ -376,7 +376,7 @@ public class BottomBarTab extends LinearLayout {
 
         boolean isShifting = type == Type.SHIFTING;
 
-        float scale = isShifting ? 0 : INACTIVE_FIXED_TITLE_SCALE;
+        float scale = isShifting ? 0 : inactiveFixedTitleScale;
         int iconPaddingTop = isShifting ? sixteenDps : eightDps;
 
         if (animate) {
@@ -493,7 +493,7 @@ public class BottomBarTab extends LinearLayout {
             }
         });
 
-        paddingAnimator.setDuration(ANIMATION_DURATION);
+        paddingAnimator.setDuration(animationDuration);
         paddingAnimator.start();
     }
 
@@ -503,7 +503,7 @@ public class BottomBarTab extends LinearLayout {
         }
 
         ViewPropertyAnimatorCompat titleAnimator = ViewCompat.animate(titleView)
-                .setDuration(ANIMATION_DURATION)
+                .setDuration(animationDuration)
                 .scaleX(finalScale)
                 .scaleY(finalScale);
         titleAnimator.alpha(finalAlpha);
@@ -512,7 +512,7 @@ public class BottomBarTab extends LinearLayout {
 
     private void animateIcon(float finalAlpha) {
         ViewCompat.animate(iconView)
-                .setDuration(ANIMATION_DURATION)
+                .setDuration(animationDuration)
                 .alpha(finalAlpha)
                 .start();
     }
@@ -569,6 +569,18 @@ public class BottomBarTab extends LinearLayout {
         }
 
         super.onRestoreInstanceState(state);
+    }
+
+    public void setInactiveFixedTitleScale(float value) {
+        inactiveFixedTitleScale = value;
+    }
+
+    public void setActiveTitleScale(float value) {
+        activeTitleScale = value;
+    }
+
+    public void setAnimationDuration(long value) {
+        animationDuration = value;
     }
 
     @VisibleForTesting
